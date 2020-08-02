@@ -1,25 +1,26 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import {
+  BrowserRouter as Router,
+  Route, Switch
+} from "react-router-dom";
+import PlayGround from "./containers/Playground";
+import { paths } from './commons/Constants';
+import Survey from './containers/survey/Survey';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+      <Switch>
+        <Route path={paths.SURVEY+"/:id?"}>
+          <Survey />
+        </Route>
+        <Route path={paths.PLAYGROUND}>
+          <PlayGround />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
