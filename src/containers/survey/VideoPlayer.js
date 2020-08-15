@@ -193,7 +193,7 @@ class VideoPlayer extends Component {
                 <Row hidden={!this.state.isVideoLoaded}>
                     <Col>
                         <div className="embed-responsive embed-responsive-16by9">
-                            <video ref={this.videoElement} className="embed-responsive-item" controls></video>
+                            <video ref={this.videoElement} className="embed-responsive-item"></video>
                         </div>
                     </Col>
                 </Row>

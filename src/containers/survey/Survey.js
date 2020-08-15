@@ -54,9 +54,18 @@ class Survey extends Component {
 
         let selectedEntities = null;
 
-        restClient.get('/survey')
+        restClient.get('/configurations.php', { params: { user_id: localStorage.getItem(storageKeys.SURVEY_ID) } })
             .then(response => {
-                categories = response.data.categories;
+                categories = response.data.map((item) => {
+                    item.videos = item.videos.map((video) => {
+                        video.configurations = video.configurations.map((configuration) => {
+                            configuration.isRated = configuration.isRated > 0;
+                            return configuration;
+                        })
+                        return video;
+                    });
+                    return item;
+                });
                 categories.forEach(category => {
                     category.videos.forEach(video => {
                         video.configurations.forEach(configuration => {
@@ -75,6 +84,7 @@ class Survey extends Component {
                         })
                     })
                 });
+                console.log(categories);
                 this.setState({ selectedEntities: selectedEntities, readyToDisplayPlayer: true, numOfConfigurations: numOfConfigurations, numOfRatedConfigurations: numOfRatedConfigurations, categories: categories });
 
             })
@@ -123,9 +133,10 @@ class Survey extends Component {
 
     onRate(rate, configurationId) {
 
-        restClient.post("/rate", {
+        restClient.post("/insertRate.php", {
             rate: rate,
-            configurationId: configurationId
+            config_id: parseInt(configurationId),
+            user_id: localStorage.getItem(storageKeys.SURVEY_ID)
         }).then((response) => {
             let categories = this.state.categories.map((category) => {
                 category.videos = category.videos.map((video) => {
@@ -174,16 +185,16 @@ class Survey extends Component {
 
     }
 
-    onNewSurvey(){
+    onNewSurvey() {
         localStorage.removeItem(storageKeys.SURVEY_ID);
         this.props.history.push(paths.SURVEY + "/");
         window.location.reload();
     }
 
     render() {
-        if(this.state.numOfConfigurations===this.state.numOfRatedConfigurations){
+        if (this.state.numOfConfigurations === this.state.numOfRatedConfigurations) {
             return (
-                <Thanks onNewSurvey={()=>{this.onNewSurvey()}}></Thanks>
+                <Thanks onNewSurvey={() => { this.onNewSurvey() }}></Thanks>
             )
         }
 

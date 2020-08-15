@@ -7,7 +7,7 @@ class Playground extends Component{
     render(){
         return (
             <div>
-                Playground
+               Playground
             </div>
         )
     }

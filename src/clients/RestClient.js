@@ -2,7 +2,7 @@ import axios from 'axios';
 import { storageKeys } from '../commons/Constants';
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8090'
+    baseURL: process.env.REACT_APP_URL
 });
 
 instance.interceptors.request.use(function (config) {

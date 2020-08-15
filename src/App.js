@@ -9,7 +9,7 @@ import { paths } from './commons/Constants';
 import Survey from './containers/survey/Survey';
 function App() {
   return (
-    <Router>
+    <Router basename="/react">
       {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
       <Switch>
