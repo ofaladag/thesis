@@ -80,6 +80,19 @@ class VideoPlayer extends Component {
         });
 
 
+        player.updateSettings({
+            'debug': {
+                'logLevel': window.dashjs.Debug.LOG_LEVEL_DEBUG
+            },
+            'streaming': {
+                'abr': {
+                    'useDefaultABRRules': false,
+                    'ABRStrategy': 'abrBola'
+                }
+            }
+        });
+
+
         window.player = player;
     }
 
